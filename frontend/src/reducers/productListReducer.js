@@ -8,11 +8,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
     case GET_PRODUCTS:
       return {
         ...state,
@@ -23,6 +18,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;
