@@ -1,8 +1,8 @@
-import { GET_PRODUCTS, PRODUCTS_ERROR } from "./types";
+import { GET_PRODUCTS, PRODUCTS_ERROR, SET_LOADING } from "./types";
 import axios from "axios";
 
 // get logs from server
-export const listProducts = () => async (dispatch) => {
+export const getProducts = () => async (dispatch) => {
   try {
     setLoading();
     const res = await axios.get("/api/products");
@@ -11,7 +11,7 @@ export const listProducts = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    dispathc({
+    dispatch({
       type: PRODUCTS_ERROR,
       payload:
         err.response && err.response.data.message

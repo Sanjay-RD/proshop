@@ -4,27 +4,37 @@ import Product from "../components/Product";
 import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 
-const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
+import { connect } from "react-redux";
+import { getProducts } from "../actions/productAction";
+
+const HomeScreen = ({ product: { products, loading, error }, getProducts }) => {
   useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await axios.get("/api/products");
-      setProducts(res.data);
-    };
-    fetchProducts();
+    getProducts();
   }, []);
   return (
     <>
       <h1>Latest Products</h1>
-      <Row>
-        {products.map((product) => (
-          <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <h2>Loading .....</h2>
+      ) : error ? (
+        <h3>{error}</h3>
+      ) : (
+        <Row>
+          {products.map((product) => (
+            <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
+              <Product product={product} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };
 
-export default HomeScreen;
+const mapStateToProps = (state) => {
+  return {
+    product: state.productList,
+  };
+};
+
+export default connect(mapStateToProps, { getProducts })(HomeScreen);

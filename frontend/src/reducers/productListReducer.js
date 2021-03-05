@@ -16,8 +16,8 @@ export default (state = initialState, action) => {
     case GET_PRODUCTS:
       return {
         ...state,
-        loading: false,
         products: action.payload,
+        loading: false,
       };
     case PRODUCTS_ERROR:
       return {
