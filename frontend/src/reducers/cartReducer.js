@@ -1,7 +1,13 @@
 import { CART_ADD_ITEM } from "../actions/types";
 
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
+
+// console.log(cartItemsFromStorage);
+
 const initialState = {
-  cartItem: [],
+  cartItem: cartItemsFromStorage,
 };
 
 export default (state = initialState, action) => {
