@@ -3,3 +3,4 @@ export const PRODUCTS_ERROR = "PRODUCTS_ERROR";
 export const SET_LOADING = "SET_LOADING";
 export const GET_PRODUCT = "GET_PRODUCT";
 export const CART_ADD_ITEM = "CART_ADD_ITEM";
+export const CART_REMOVE_ITEM = "CART_REMOVE_ITEM";

@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM } from "../actions/types";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../actions/types";
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
@@ -29,6 +29,13 @@ export default (state = initialState, action) => {
           cartItem: [...state.cartItem, item],
         };
       }
+    case CART_REMOVE_ITEM:
+      return {
+        ...state,
+        cartItem: state.cartItem.filter(
+          (item) => item.product !== action.payload
+        ),
+      };
     default:
       return state;
   }

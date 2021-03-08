@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { addToCart } from "../actions/cartAction";
+import { addToCart, removeToCart } from "../actions/cartAction";
 import Message from "../components/Message";
 
 import {
@@ -14,7 +14,14 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const CartScreen = ({ match, location, history, addToCart, cartItem }) => {
+const CartScreen = ({
+  match,
+  location,
+  history,
+  addToCart,
+  cartItem,
+  removeToCart,
+}) => {
   const productId = match.params.id;
 
   console.log(productId);
@@ -27,6 +34,7 @@ const CartScreen = ({ match, location, history, addToCart, cartItem }) => {
 
   const removeFromCartHandler = (id) => {
     console.log("Remove Cart");
+    removeToCart(id);
   };
 
   const checkoutHandler = () => {
@@ -125,4 +133,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { addToCart })(CartScreen);
+export default connect(mapStateToProps, { addToCart, removeToCart })(
+  CartScreen
+);
