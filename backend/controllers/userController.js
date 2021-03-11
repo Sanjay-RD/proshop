@@ -23,5 +23,24 @@ const authUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid Email or Password");
   }
 });
+// @desc    Get User Profile
+// @route   GET /api/user/profile
+// access   Private
+// note:- to use authorization token in postman, in headers put Authorization in key value and value as 'Bearer tokenvalue' and only you will be authorized.
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
 
-export { authUser };
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(401);
+    throw new Error("User not found");
+  }
+});
+
+export { authUser, getUserProfile };
