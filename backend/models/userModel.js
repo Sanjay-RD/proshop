@@ -31,6 +31,17 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+userSchema.pre("save", async function (next) {
+  // if we update user we dont need to update password if it does new hash will be create and we will not be able to login in so we should do some check
+  if (!this.isModified("password")) {
+    next();
+  }
+
+  // run if only password is changed or modified,
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
 const User = mongoose.model("User", userSchema);
 
 export default User;
