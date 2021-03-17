@@ -7,7 +7,7 @@ import {
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
-  : {};
+  : null;
 
 const initialState = {
   userInfo: userInfoFromStorage,
@@ -35,7 +35,12 @@ export default (state = initialState, action) => {
         error: action.payload,
       };
     case USER_LOGOUT:
-      return {};
+      return {
+        ...state,
+        userInfo: null,
+        loading: false,
+        error: null,
+      };
     default:
       return state;
   }
