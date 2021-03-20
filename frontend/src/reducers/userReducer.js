@@ -6,6 +6,10 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  CLEAR_ERROR,
 } from "../actions/types";
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
@@ -14,6 +18,7 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 
 const initialState = {
   userInfo: userInfoFromStorage,
+  user: {},
   loading: false,
   error: null,
 };
@@ -22,6 +27,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
     case USER_REGISTER_REQUEST:
+    case USER_DETAILS_REQUEST:
       return {
         ...state,
         loading: true,
@@ -33,8 +39,15 @@ export default (state = initialState, action) => {
         loading: false,
         userInfo: action.payload,
       };
+    case USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
     case USER_LOGIN_FAIL:
     case USER_REGISTER_FAIL:
+    case USER_DETAILS_FAIL:
       return {
         ...state,
         loading: false,
@@ -47,7 +60,11 @@ export default (state = initialState, action) => {
         loading: false,
         error: null,
       };
-
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

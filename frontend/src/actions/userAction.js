@@ -7,6 +7,10 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  CLEAR_ERROR,
 } from "./types";
 
 export const login = (email, password) => async (dispatch) => {
@@ -41,6 +45,9 @@ export const login = (email, password) => async (dispatch) => {
           ? err.response.data.message
           : err.message,
     });
+    setTimeout(() => {
+      dispatch({ type: CLEAR_ERROR });
+    }, 5000);
   }
 };
 
@@ -86,5 +93,45 @@ export const register = (name, email, password) => async (dispatch) => {
           ? err.response.data.message
           : err.message,
     });
+    setTimeout(() => {
+      dispatch({ type: CLEAR_ERROR });
+    }, 5000);
+  }
+};
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DETAILS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const res = await axios.get(`/api/user/${id}`, config);
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+    setTimeout(() => {
+      dispatch({ type: CLEAR_ERROR });
+    }, 5000);
   }
 };
