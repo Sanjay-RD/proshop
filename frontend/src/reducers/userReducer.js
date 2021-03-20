@@ -9,7 +9,11 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
   CLEAR_ERROR,
+  CLEAR_MESSAGE,
 } from "../actions/types";
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
@@ -28,6 +32,7 @@ export default (state = initialState, action) => {
     case USER_LOGIN_REQUEST:
     case USER_REGISTER_REQUEST:
     case USER_DETAILS_REQUEST:
+    case USER_UPDATE_PROFILE_REQUEST:
       return {
         ...state,
         loading: true,
@@ -39,6 +44,13 @@ export default (state = initialState, action) => {
         loading: false,
         userInfo: action.payload,
       };
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        userInfo: action.payload,
+        user: action.payload,
+      };
     case USER_DETAILS_SUCCESS:
       return {
         ...state,
@@ -48,6 +60,7 @@ export default (state = initialState, action) => {
     case USER_LOGIN_FAIL:
     case USER_REGISTER_FAIL:
     case USER_DETAILS_FAIL:
+    case USER_UPDATE_PROFILE_FAIL:
       return {
         ...state,
         loading: false,
@@ -64,6 +77,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: null,
+      };
+    case CLEAR_MESSAGE:
+      return {
+        ...state,
+        success: false,
       };
     default:
       return state;

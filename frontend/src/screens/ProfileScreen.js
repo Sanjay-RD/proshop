@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import FormContainer from "../components/FormContainer";
-import { getUserDetails } from "../actions/userAction";
+import { getUserDetails, updateUserProfile } from "../actions/userAction";
 
 import { connect } from "react-redux";
 import { Row, Col, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
-const ProfileScreen = ({ history, location, getUserDetails, userLogin }) => {
-  const { userInfo, loading, error, user } = userLogin;
+const ProfileScreen = ({
+  history,
+  updateUserProfile,
+  getUserDetails,
+  userLogin,
+}) => {
+  const { userInfo, loading, error, user, success } = userLogin;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +37,7 @@ const ProfileScreen = ({ history, location, getUserDetails, userLogin }) => {
     if (password !== confirmpassword) {
       setMessage("Password Does not Match");
     } else {
-      // DISPATCH UPDATE REDUCER
+      updateUserProfile({ id: user._id, name, email, password });
     }
   };
 
@@ -44,6 +47,7 @@ const ProfileScreen = ({ history, location, getUserDetails, userLogin }) => {
         <h1>Sign Up</h1>
         {error && <Message variant="danger">{error}</Message>}
         {message && <Message variant="danger">{message}</Message>}
+        {success && <Message variant="success">Profile Updated</Message>}
         {loading && <Loader />}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="name">
@@ -101,4 +105,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getUserDetails })(ProfileScreen);
+export default connect(mapStateToProps, { updateUserProfile, getUserDetails })(
+  ProfileScreen
+);
