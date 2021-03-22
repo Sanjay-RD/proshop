@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FormContainer from "../components/FormContainer";
+import CheckoutSteps from "../components/CheckoutSteps";
 import { saveShippingAddress } from "../actions/cartAction";
 
 import { connect } from "react-redux";
@@ -28,6 +29,7 @@ const ShippingScreen = ({ history, saveShippingAddress, shippingAddress }) => {
   };
   return (
     <FormContainer>
+      <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="address">
