@@ -70,6 +70,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userInfo: null,
+        user: {},
         loading: false,
         error: null,
       };

@@ -1,13 +1,21 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../actions/types";
+import {
+  CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
+  CART_SAVE_SHIPPING_ADDRESS,
+} from "../actions/types";
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
   : [];
+const shippingAddressFromStorage = localStorage.getItem("saveShippingAddress")
+  ? JSON.parse(localStorage.getItem("saveShippingAddress"))
+  : null;
 
 // console.log(cartItemsFromStorage);
 
 const initialState = {
   cartItem: cartItemsFromStorage,
+  saveShippingAddress: shippingAddressFromStorage,
 };
 
 export default (state = initialState, action) => {
@@ -35,6 +43,11 @@ export default (state = initialState, action) => {
         cartItem: state.cartItem.filter(
           (item) => item.product !== action.payload
         ),
+      };
+    case CART_SAVE_SHIPPING_ADDRESS:
+      return {
+        ...state,
+        saveShippingAddress: action.payload,
       };
     default:
       return state;
