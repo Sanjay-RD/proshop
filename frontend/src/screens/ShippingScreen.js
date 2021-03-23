@@ -25,7 +25,7 @@ const ShippingScreen = ({ history, saveShippingAddress, shippingAddress }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     saveShippingAddress({ address, city, postalCode, country });
-    history.push("/checkout");
+    history.push("/payment");
   };
   return (
     <FormContainer>
@@ -78,7 +78,7 @@ const ShippingScreen = ({ history, saveShippingAddress, shippingAddress }) => {
 
 const mapStateToProps = (state) => {
   return {
-    shippingAddress: state.cart.saveShippingAddress,
+    shippingAddress: state.cart.shippingAddress,
   };
 };
 

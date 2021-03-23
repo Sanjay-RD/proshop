@@ -1,6 +1,7 @@
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
+  CART_SAVE_PAYMENT_METHOD,
   CART_SAVE_SHIPPING_ADDRESS,
 } from "../actions/types";
 
@@ -15,7 +16,8 @@ const shippingAddressFromStorage = localStorage.getItem("saveShippingAddress")
 
 const initialState = {
   cartItem: cartItemsFromStorage,
-  saveShippingAddress: shippingAddressFromStorage,
+  shippingAddress: shippingAddressFromStorage,
+  savePaymentMethod: "",
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +50,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         saveShippingAddress: action.payload,
+      };
+    case CART_SAVE_PAYMENT_METHOD:
+      return {
+        ...state,
+        savePaymentMethod: action.payload,
       };
     default:
       return state;
