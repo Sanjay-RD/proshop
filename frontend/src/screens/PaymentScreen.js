@@ -6,7 +6,7 @@ import { savePaymentMethod } from "../actions/cartAction";
 import { connect } from "react-redux";
 import { Col, Button, Form } from "react-bootstrap";
 
-const PaymentScreen = ({ history, shippingAddress }) => {
+const PaymentScreen = ({ history, shippingAddress, savePaymentMethod }) => {
   if (!shippingAddress) {
     history.push("/shipping");
   }

@@ -17,7 +17,7 @@ const shippingAddressFromStorage = localStorage.getItem("saveShippingAddress")
 const initialState = {
   cartItem: cartItemsFromStorage,
   shippingAddress: shippingAddressFromStorage,
-  savePaymentMethod: "",
+  paymentMethod: "",
 };
 
 export default (state = initialState, action) => {
@@ -49,12 +49,12 @@ export default (state = initialState, action) => {
     case CART_SAVE_SHIPPING_ADDRESS:
       return {
         ...state,
-        saveShippingAddress: action.payload,
+        shippingAddress: action.payload,
       };
     case CART_SAVE_PAYMENT_METHOD:
       return {
         ...state,
-        savePaymentMethod: action.payload,
+        paymentMethod: action.payload,
       };
     default:
       return state;
