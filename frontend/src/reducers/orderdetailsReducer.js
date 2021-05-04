@@ -5,7 +5,9 @@ import {
   ORDER_DETAILS_FAIL,
 } from "../actions/types";
 
-const initialState = {};
+const initialState = {
+  loading: true,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -18,7 +20,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        orderItems: action.payload,
+        order: action.payload,
       };
 
     case ORDER_DETAILS_FAIL:

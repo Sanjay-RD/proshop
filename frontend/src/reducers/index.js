@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   userLogin: userReducer,
   orderCreate: orderReducer,
-  orderDetail: orderdetailsReducer,
+  orderDetails: orderdetailsReducer,
 });
 
 export default rootReducer;
