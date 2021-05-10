@@ -46,9 +46,9 @@ export default (state = initialState, action) => {
       };
     case USER_UPDATE_PROFILE_SUCCESS:
       return {
+        ...state,
         loading: false,
         success: true,
-        userInfo: action.payload,
         user: action.payload,
       };
     case USER_DETAILS_SUCCESS:

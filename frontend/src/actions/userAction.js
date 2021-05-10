@@ -162,11 +162,12 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     setTimeout(() => {
       dispatch({ type: CLEAR_MESSAGE });
     }, 5000);
-
+    console.log(res);
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: res.data,
     });
+    localStorage.setItem("userInfo", JSON.stringify(res.data));
   } catch (err) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,

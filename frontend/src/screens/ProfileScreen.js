@@ -52,7 +52,7 @@ const ProfileScreen = ({
   return (
     <Row>
       <Col md={3}>
-        <h1>Sign Up</h1>
+        <h1>Update Profile</h1>
         {error && <Message variant="danger">{error}</Message>}
         {message && <Message variant="danger">{message}</Message>}
         {success && <Message variant="success">Profile Updated</Message>}
