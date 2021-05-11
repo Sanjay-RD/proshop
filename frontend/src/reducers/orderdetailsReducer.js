@@ -3,6 +3,7 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  ORDER_DETAILS_RESET,
 } from "../actions/types";
 
 const initialState = {
@@ -28,6 +29,11 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case ORDER_DETAILS_RESET:
+      return {
+        ...state,
+        order: {},
       };
     case CLEAR_ERROR:
       return {

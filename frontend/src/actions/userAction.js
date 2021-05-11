@@ -15,6 +15,9 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   CLEAR_ERROR,
   CLEAR_MESSAGE,
+  ORDER_CREATE_RESET,
+  ORDER_DETAILS_RESET,
+  ORDER_LIST_MY_RESET,
 } from "./types";
 
 export const login = (email, password) => async (dispatch) => {
@@ -58,6 +61,8 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: ORDER_DETAILS_RESET });
+  dispatch({ type: ORDER_LIST_MY_RESET });
 };
 
 export const register = (name, email, password) => async (dispatch) => {
