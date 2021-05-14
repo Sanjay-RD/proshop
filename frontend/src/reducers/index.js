@@ -6,6 +6,7 @@ import orderReducer from "./orderReducer";
 import orderdetailsReducer from "./orderdetailsReducer";
 import orderPayReducer from "./orderPayReducer";
 import myOrdersReducer from "./myOrdersReducer";
+import userListReducer from "./userListReducer";
 
 const rootReducer = combineReducers({
   productList: productListReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   orderDetails: orderdetailsReducer,
   orderPay: orderPayReducer,
   myOrders: myOrdersReducer,
+  userList: userListReducer,
 });
 
 export default rootReducer;

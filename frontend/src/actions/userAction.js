@@ -18,6 +18,9 @@ import {
   ORDER_CREATE_RESET,
   ORDER_DETAILS_RESET,
   ORDER_LIST_MY_RESET,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_LIST_FAIL,
 } from "./types";
 
 export const login = (email, password) => async (dispatch) => {
@@ -184,5 +187,38 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     // setTimeout(() => {
     //   dispatch({ type: CLEAR_ERROR });
     // }, 5000);
+  }
+};
+
+export const userList = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_LIST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const res = await axios.get(`/api/user`, config);
+
+    dispatch({
+      type: USER_LIST_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_LIST_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
   }
 };
