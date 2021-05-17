@@ -25,6 +25,9 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from "./types";
 
 export const login = (email, password) => async (dispatch) => {
@@ -252,6 +255,47 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: USER_DELETE_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
+
+export const updateUser = (id, user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const res = await axios.put(`/api/user/${id}`, user, config);
+
+    setTimeout(() => {
+      dispatch({ type: CLEAR_MESSAGE });
+    }, 5000);
+
+    dispatch({
+      type: USER_UPDATE_SUCCESS,
+    });
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
       payload:
         err.response && err.response.data.message
           ? err.response.data.message
