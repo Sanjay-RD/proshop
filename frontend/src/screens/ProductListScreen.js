@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../actions/productAction";
+import { deleteProduct, getProducts } from "../actions/productAction";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Table, Button, Row, Col } from "react-bootstrap";
@@ -16,17 +16,21 @@ const ProductListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const { success: successDelete } = productDelete;
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(getProducts());
     } else {
       history.push("/login");
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, successDelete]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you Sure")) {
       // delete product
+      dispatch(deleteProduct(id));
     }
   };
 

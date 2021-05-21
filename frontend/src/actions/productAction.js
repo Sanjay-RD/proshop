@@ -3,6 +3,9 @@ import {
   PRODUCTS_ERROR,
   SET_LOADING,
   GET_PRODUCT,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -41,6 +44,38 @@ export const getProduct = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PRODUCTS_ERROR,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
+
+export const deleteProduct = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PRODUCT_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/products/${id}`, config);
+
+    dispatch({
+      type: PRODUCT_DELETE_SUCCESS,
+    });
+  } catch (err) {
+    dispatch({
+      type: PRODUCT_DELETE_FAIL,
       payload:
         err.response && err.response.data.message
           ? err.response.data.message
