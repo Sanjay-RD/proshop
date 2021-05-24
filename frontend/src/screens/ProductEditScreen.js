@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
-import { getProduct } from "../actions/productAction";
+import { getProduct, updateProduct } from "../actions/productAction";
+import { PRODUCT_UPDATE_RESET } from "../actions/types";
 
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -23,22 +24,46 @@ const ProductEditScreen = ({ match, history }) => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, product } = productList;
 
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate;
+
   useEffect(() => {
-    if (!product.name || product._id !== productId) {
-      dispatch(getProduct(productId));
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
+      history.push("/admin/productlist");
     } else {
-      setName(product.name);
-      setPrice(product.price);
-      setImage(product.image);
-      setBrand(product.brand);
-      setCountInStock(product.countInStock);
-      setCategory(product.category);
-      setDescription(product.description);
+      if (!product.name || product._id !== productId) {
+        dispatch(getProduct(productId));
+      } else {
+        setName(product.name);
+        setPrice(product.price);
+        setImage(product.image);
+        setBrand(product.brand);
+        setCountInStock(product.countInStock);
+        setCategory(product.category);
+        setDescription(product.description);
+      }
     }
-  }, [dispatch, product, history]);
+  }, [dispatch, product, history, successUpdate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const product = {
+      _id: productId,
+      name,
+      price,
+      image,
+      brand,
+      countInStock,
+      category,
+      description,
+    };
+
+    dispatch(updateProduct(product));
   };
 
   return (

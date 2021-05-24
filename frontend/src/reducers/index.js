@@ -11,6 +11,7 @@ import userDeleteReducer from "./userDeleteReducer";
 import userUpdateReducer from "./userUpdateReducer";
 import productDeleteReducer from "./productDeleteReducer";
 import productCreateReducer from "./productCreateReducer";
+import productUpdateReducer from "./productUpdateReducer";
 
 const rootReducer = combineReducers({
   productList: productListReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   userUpdate: userUpdateReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
 });
 
 export default rootReducer;
