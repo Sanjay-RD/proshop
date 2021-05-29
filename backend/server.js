@@ -2,6 +2,7 @@ import express, { json } from "express";
 import path from "path";
 import dotenv from "dotenv";
 import colors from "colors";
+import morgan from "morgan";
 import connectDB from "./config/db.js";
 
 import productRoutes from "./routes/productRoutes.js";
@@ -24,6 +25,10 @@ connectDB();
 //   console.log(req.originalUrl);
 //   next();
 // });
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 app.get("/", (req, res) => {
   res.send("hello");
