@@ -5,13 +5,18 @@ import Message from "../components/Message";
 
 import { Row, Col } from "react-bootstrap";
 
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../actions/productAction";
 
-const HomeScreen = ({ product: { products, loading, error }, getProducts }) => {
+const HomeScreen = ({ match }) => {
+  const keyword = match.params.keyword;
+  const dispatch = useDispatch();
+
+  const productList = useSelector((state) => state.productList);
+  const { products, loading, error } = productList;
   useEffect(() => {
-    getProducts();
-  }, []);
+    dispatch(getProducts(keyword));
+  }, [dispatch, keyword]);
   return (
     <>
       <h1>Latest Products</h1>
@@ -32,10 +37,4 @@ const HomeScreen = ({ product: { products, loading, error }, getProducts }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    product: state.productList,
-  };
-};
-
-export default connect(mapStateToProps, { getProducts })(HomeScreen);
+export default HomeScreen;
