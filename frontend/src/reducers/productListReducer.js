@@ -17,7 +17,9 @@ export default (state = initialState, action) => {
     case GET_PRODUCTS:
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.products,
+        page: action.payload.page,
+        pages: action.payload.pages,
         loading: false,
       };
     case GET_PRODUCT:

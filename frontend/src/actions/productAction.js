@@ -21,13 +21,15 @@ import axios from "axios";
 
 // get logs from server
 export const getProducts =
-  (keyword = "") =>
+  (keyword = "", pageNumber = "") =>
   async (dispatch) => {
     try {
       dispatch({
         type: SET_LOADING,
       });
-      const res = await axios.get(`/api/products?keyword=${keyword}`);
+      const res = await axios.get(
+        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      );
       dispatch({
         type: GET_PRODUCTS,
         payload: res.data,
