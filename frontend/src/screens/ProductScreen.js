@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Meta from "../components/Meta";
 
 import { Link } from "react-router-dom";
 import {
@@ -74,6 +75,7 @@ const ProductScreen = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />

@@ -4,11 +4,13 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "./Paginate";
 import ProductCarousel from "../components/ProductCarousel";
+import Meta from "../components/Meta";
 
 import { Row, Col } from "react-bootstrap";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../actions/productAction";
+import { Link } from "react-router-dom";
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
@@ -22,7 +24,14 @@ const HomeScreen = ({ match }) => {
   }, [dispatch, keyword, pageNumber]);
   return (
     <>
-      {!keyword && <ProductCarousel />}
+      <Meta />
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to="/" className="btn btn-light">
+          Go Back
+        </Link>
+      )}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
