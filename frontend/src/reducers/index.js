@@ -15,6 +15,7 @@ import productUpdateReducer from "./productUpdateReducer";
 import orderListReducer from "./orderListReducer";
 import orderDeliverReducer from "./orderDeliverReducer";
 import productCreateReviewReducer from "./productCreateReviewReducer";
+import productTopRatedReducer from "./productTopRatedReducer";
 
 const rootReducer = combineReducers({
   productList: productListReducer,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   productCreateReview: productCreateReviewReducer,
   orderList: orderListReducer,
   orderDeliver: orderDeliverReducer,
+  productTopRated: productTopRatedReducer,
 });
 
 export default rootReducer;
